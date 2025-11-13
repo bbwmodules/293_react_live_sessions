@@ -1,0 +1,112 @@
+import LiveSandbox from "./components/LiveSandbox.jsx";
+
+# Lesson 4 – Form-EventHandler
+
+Häufig werden Daten in einem Formular erfasst und sollen beim submit des Forms verarbeitet werden.<br/>
+Dazu verwendet man den **Form-Eventhandler.**
+
+--
+
+## Aufbau eines Form-Eventhandlers
+
+Ein **Form-Eventhandler ist eine Funktion**, die aufgerufen wird, wenn beim /<form/> der _submit_ ausgelöst wird.<br/>
+zBsp. Die Eingabe soll verrechnet werden oder die Eingaben in einer Datenbank gespeichert werden..
+
+Start mit einem einfachen Formular.<br/>
+
+```jsx
+function Formular(){
+   return (
+       <>
+          <form>
+             <label>Name:</label>
+             <input type="text"/>
+             <input type="submit" value="doit"/>
+          </form>
+       </>
+   );
+}
+```
+
+Für die den Wert der Eingabe braucht es einen **useState**.
+Und der input braucht einen **onChange-Eventhandler**, der den Wert im State speichert.
+
+```jsx
+function Formular(){
+   const [name, setName] = React.useState("");
+   ...
+   <input type="text" onChange={e => setName(e.target.value)}/>
+   ...
+```
+
+Wird der _submit_ ausgelöst, so soll die Funktion _handleSubmit_ aufgerufen werden.<br/>
+Das Ergebnis wird in einem weiteren _useState result: gespeichert.<br/>
+
+**ACHTUNG:** Im Eventhandler muss das Standardverhalten des Browsers mit _event.preventDefault()_ verhindert werden, sonst wird die Seite neu geladen.
+
+**ACHTUNG:** Beim Form-Element muss der Eventhandler _handleSubmit_ mit _onSubmit_ verbunden werden, sonst wird die Seite neu geladen.
+
+```jsx
+function Formular(){
+   const [name, setName] = React.useState("");
+   const [result, setResult] = React.useState("");
+
+   function handleSubmit() {
+        event.preventDefault();
+        setResult("Hallo " + name);
+   }
+
+   <form onSubmit={handleSubmit}>
+   ...
+```
+
+Und nun braucht es noch ein Ausgabeelement für das Ergebnis:
+
+```jsx
+function Formular(){
+   ...
+   return (
+       <>
+           <form>
+           ...
+           </form>
+           <p>{result}</p>
+       </>
+   );
+}
+```
+
+### Interaktive Übung
+
+Ergänzen Sie die Komponente so, dass sie einen Zähler enthält, der bei jedem Klick auf den Button um 1 erhöht wird.
+
+<LiveSandbox
+    storageKey="04_formeventhandler_name"
+    code={
+`function Formular() {
+
+return (
+   <>
+     <form>
+
+     </form>
+   </>
+);
+}`
+    }
+/>
+
+### Interaktive Übung
+
+Ergänzen Sie die Komponente um einen weiteren Button.<br/>
+Wird dieser gedrückt, so werden der Wert des Eingabefeldes und der Wert des Ergebnisses auf "" zurückgesetzt.
+
+### Interaktive Übung
+
+Verwenden Sie für die Ausgabe eine textarea anstelle eines Absatzes.
+
+```jsx
+   ...
+   <textarea value={result}></textarea>
+   ...
+```
