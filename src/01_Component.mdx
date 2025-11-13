@@ -1,0 +1,92 @@
+import LiveSandbox from "./components/LiveSandbox.jsx";
+
+# Lesson 1 – Komponente (ohne Props)
+
+Ein zentrales Prinzip bei React ist die Komponente.
+
+- Das Darstellung wird in viele kleine Einzelteile zerlegt, die für sich eine bestimmte Aufgabe erledigen.
+- Diese Einzelteile sind die React Komponenten.
+- Aus kleinen Komponenten baut man komplexere Komponenten und aus komplexeren Komponenten die Seiten, welche auch Komponenten sind.
+
+---
+
+## Aufbau einer Komponente
+Eine Komponente ist eine JavaScript Funktion, die JSX zurückgibt.
+
+```jsx
+function Hello() {
+    return (
+        <>
+            <h2>Hallo React 👋</h2>
+        </>
+    )
+}
+```
+
+### Interaktive Übung
+
+- Ergänzen Sie die Komponente so, dass sie eine Überschrift mit dem Text "Hallo React" rendert.
+- Ergänzen Sie zusätzlich einen Absatz mit dem Text "Ich bin eine React Komponente".
+
+<LiveSandbox
+    storageKey="01_component_hello"
+    code={
+`function Hello() {
+    return (
+        <>
+        </>
+    );
+}`
+   }
+/>
+
+---
+
+## Komponente in Projekt
+
+Wie eine Komponente im React-Projekt abgelegt wird, lässt sich im _Live-Editor_ nicht abbilden.
+
+- Jede Komponente im Projekt wird in einer **eigenen Datei** gespeichert werden.
+- Der _Dateiname der Komponente_ muss mit einem _Grossbuchstaben beginnen_ und den _gleichen Namen_ wie die Komponente haben.<br/>
+  Bsp: `Hello.jsx` für die Komponente `Hello`.
+
+- Es ist gute Praxis, einen **JSDoc-Header** /** ... */ oberhalb der Komponente zu schreiben.
+
+- Nur eine mit **export** deklarierte Komponente, kann in anderen Komponenten importiert werden.<br/>
+  Bsp: `export default function Hello() { ... }`
+
+### Beispiel einer Komponente im Projekt
+
+Datei: `Hello.jsx`
+
+```jsx
+import React from 'react';
+
+/**
+ * Eine einfache React Komponente, die eine Begrüssung anzeigt.
+ */
+export default function Hello() {
+    return (
+        <>
+            <h2>Hallo React 👋</h2>
+            <p>Ich bin eine React Komponente.</p>
+        </>
+    )
+}
+```
+
+### Einbinden der Komponente `Hello` in die Komponente `App`
+
+```jsx
+import React from 'react';
+import Hello from './components/Hello'; //Hello liegt im Ordner components
+
+function App() {
+    return (
+        <div>
+            <Hello />  // Nutzung der Komponente
+        </div>
+    );
+}
+export default App;
+```

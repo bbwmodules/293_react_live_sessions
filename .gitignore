@@ -1,0 +1,71 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Compiled output
+/dist
+/build
+/.output
+/.nuxt
+
+# Temp folders
+/tmp
+/temp
+
+# Dependency directories
+/node_modules/
+
+# Editor directories and files
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Env
+.env
+.env.*.local
+
+# Coverage
+coverage
+*.lcov
+
+# Misc
+.DS_Store
+Thumbs.db
+
+# Local dev tools
+/.firebase/
+.eslintcache
+.stylelintcache
+
+# Vite cache
+/.vite
+vite.config.timestamp*
+
+# TypeScript
+*.tsbuildinfo
+
+# JetBrains Fleet
+/.fleet
+
+# Storybook
+/.storybook-out
+/storybook-static

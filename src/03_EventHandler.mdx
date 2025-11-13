@@ -1,0 +1,70 @@
+import LiveSandbox from "./components/LiveSandbox.jsx";
+
+# Lesson 3 – Eventhandler
+
+Häufig sollen Komponenten auf Benutzereingaben reagieren.<br/>
+Dazu verwendet man **Eventhandler.**
+
+## Aufbau eines Eventhandlers
+
+Ein **Eventhandler ist eine Funktion**, die aufgerufen wird, wenn ein bestimmtes Ereignis eintritt.<br/>
+zBsp. Klickt man auf einen Button, so wird in der Funktion wird z.B. ein Zähler hochgezählt oder etwas berechnet.
+
+Für den Zähler braucht es einen UseState:
+
+```jsx
+function ClickCounter(){
+   const [count, setCount] = React.useState(0);
+   ...
+```
+Funktion zum Hochzählen:
+
+```jsx
+function ClickCounter(){
+   const [count, setCount] = React.useState(0);
+
+   function handleClick() {
+      setCount(count + 1);
+   }
+   ...
+```
+Einen Button, der mit dem Eventhandler verbunden ist und<br/>
+einen Absatz zur Ausgabe des Zählerwerts:
+
+```jsx
+function ClickCounter(){
+    ...
+    return (
+        <>
+            <p>Du hast {count} mal geklickt.</p>
+            <button onClick={handleClick}>+1</button>
+        </>
+    );
+}
+```
+
+### Interaktive Übung
+
+Ergänzen Sie die Komponente so, dass sie einen Zähler enthält, der bei jedem Klick auf den Button um 1 erhöht wird.
+
+<LiveSandbox
+    storageKey="03_eventhandler_clickcounter"
+    code={
+`function ClickCounter() {
+     /* Hier UseState für den Zählerwert einfügen */
+
+     /* Hier Funktion zum Hochzählen einfügen */
+
+          return (
+            <div>
+              {/* Hier Ausgabe des Zählerwerts einfügen */}
+              {/* Hier Button mit Eventhandler einfügen */}
+            </div>
+          );
+}`
+    }
+/>
+
+### Interaktive Übung
+
+Ergänzen Sie die Komponente um einen weiteren Button. Wird dieser gedrückt, so wird der Zähler heruntergezählt.

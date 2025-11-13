@@ -1,0 +1,102 @@
+import LiveSandbox from "./components/LiveSandbox.jsx";
+
+# Lesson 2 – useState mit Text- und Zahleneingaben
+
+Ein zentrales Prinzip bei React ist der **useState**.
+
+HTML ist eine stateless Sprache. <br/>
+Das bedeutet, dass **HTML keine Möglichkeit** bietet, **Werte zu speichern** oder zu verändern.<br/>
+React bietet mit dem **useState Hook eine Möglichkeit, Werte zu speichern** und zu verändern.<br/>
+Es gibt noch andere Möglichkeiten.
+
+---
+
+## Aufbau eines useState
+
+Der useState Hook wird in einer Komponente verwendet.<br/>
+Er wird am Anfang der Komponente deklariert und initialisiert.<br/>
+
+```jsx
+function Person() {
+   const [myValue, setMyValue] = React.useState(10);
+   ...
+```
+
+Der useState Hook besteht aus drei Teilen<br/>
+- **myValue**: freiwählbarere Name, der für den aktuelle Wert des States steht.<br/>
+- **setMyValue**: Funktion, mit der der Wert verändert werden kann. myValue<br/>
+  Beachten Sie die Namensgebung! myValue --> setMyValue
+- **React.useState(10)**: Initialisierung des States mit dem Wert 10.<br/>
+
+---
+
+## Werte aus Feldern speichern
+
+In diesem Beispiel speichern wir den Namen aus einem input-Feld.
+
+```jsx
+function Person() {
+    const [name, setName] = React.useState("");
+    return (
+        <>
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={e => setName(e.target.value)}
+            />
+            <p>Hallo {name || "Unbekannt"} </p>
+        </>
+    );
+}
+```
+
+### Interaktive Übung
+
+Ergänzen Sie die Komponenten um useState Hook und input-Feld und geben Sie das Ergebnis in einem Absatz aus.
+
+- für name
+- für vorname<br/>
+
+<LiveSandbox
+    storageKey="02_useState_namefield"
+    code={
+`function Person() {
+
+   return (
+       <>
+
+       </>
+   );
+}`
+    }
+/>
+
+---
+## UseState Hook für Zahlen zBsp `alter` ergänzen
+
+Ergänzen Sie die Komponenten um den einen useState Hook für das Alter.<br/>
+- **Beachten Sie die Initialisierung mit 0!**<br/>
+- **Beachten Sie Number(...) in der onChange Funktion!**<br/>
+   Number(...) wandelt den Eingabewert in eine Zahl um.<br/>
+
+```jsx
+const [age, setAge] = React.useState(0);
+```
+
+```jsx
+input
+  type="number"
+  placeholder="Alter"
+  value={age}
+  onChange={e => setAge(Number(e.target.value))}
+/>
+```
+Das Ergebnis wird in einem Absatz angezeigt.<br/>
+```jsx
+<p>Du bist {age || 0} Jahre alt.</p>
+```
+
+### Interaktive Übung
+
+Ergänzen Sie die Sandbox oben um den useState Hook, das Input-Feld und die Ausgabe für das Alter.
