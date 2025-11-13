@@ -3,7 +3,7 @@ name: Build and deploy to GitHub Pages
 on:
   push:
     branches:
-      - main        # ggf. auf "master" ändern, falls du den noch verwendest
+      - master
 
 permissions:
   contents: read
