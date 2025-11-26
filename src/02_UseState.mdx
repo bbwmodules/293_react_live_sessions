@@ -73,30 +73,104 @@ Ergänzen Sie die Komponenten um useState Hook und input-Feld und geben Sie das 
 />
 
 ---
-## UseState Hook für Zahlen zBsp `alter` ergänzen
+## UseState für Zahlenwerte
 
-Ergänzen Sie die Komponenten um den einen useState Hook für das Alter.<br/>
-- **Beachten Sie die Initialisierung mit 0!**<br/>
-- **Beachten Sie Number(...) in der onChange Funktion!**<br/>
-   Number(...) wandelt den Eingabewert in eine Zahl um.<br/>
+### Beispiel mit Ganzzahlen
+
+Es soll das Alter einer Person in einem input-Feld gespeichert werden.
+
+- **age**: UseState-Variable für das Alter. Beachten Sie die Initialisierung mit 0.<br/>
+- **input type="number"**: Input-Feld für Zahlen.<br/>
+- **inputMode="numeric"**: Virtuelle Tastatur auf mobilen Geräten zeigt Zahlen an.<br/>
+- **onChange**: Der Wert aus dem Input-Feld ist immer ein String.<br/>
+  Falls der Value leer ist: val === "", wird "" gespeichert. Beachten Sie die 3 === Zeichen!<br/>
+  Mit **parseInt(val,10)** wird der String in eine Ganzzahl umgewandelt (Basis 10).
 
 ```jsx
 const [age, setAge] = React.useState(0);
 ```
 
 ```jsx
-input
+<input
   type="number"
+  inputMode="numeric"
   placeholder="Alter"
   value={age}
-  onChange={e => setAge(Number(e.target.value))}
+  onChange={e => {
+    const val = e.target.value;
+    setAge(val === "" ? "" : parseInt(val, 10));
+  }}
 />
 ```
 Das Ergebnis wird in einem Absatz angezeigt.<br/>
 ```jsx
-<p>Du bist {age || 0} Jahre alt.</p>
+<p>Du bist {age} Jahre alt.</p>
 ```
 
 ### Interaktive Übung
 
 Ergänzen Sie die Sandbox oben um den useState Hook, das Input-Feld und die Ausgabe für das Alter.
+
+<LiveSandbox
+    storageKey="02_useState_agefield"
+    code={
+        `function Person() {
+
+           return (
+               <>
+
+               </>
+           );
+        }`
+    }
+/>
+
+### Beispiel mit Gleitkommazahlen
+
+Es soll die Grösse einer Person in einem input-Feld gespeichert werden.
+
+- **height**: UseState-Variable für die Grösse. Beachten Sie die Initialisierung mit "".<br/>
+- **input type="number"**: Input-Feld für Zahlen.<br/>
+- **inputMode="decimal"**: Virtuelle Tastatur auf mobilen Geräten zeigt Zahlen mit Dezimalpunkt an.<br/>
+- **onChange**: Der Wert aus dem Input-Feld ist immer ein String.<br/>
+  Falls der Value leer ist: val === "", wird "" gespeichert. Beachten Sie die 3 === Zeichen!<br/>
+  Mit **parseFloat(e.target.value)** wird der String in eine Gleitkommazahl umgewandelt.
+
+```jsx
+const [height, setHeight] = React.useState("");
+```
+
+```jsx
+<input
+  type="number"
+  step="0.01"
+  inputMode="decimal"
+  placeholder="Grösse in m"
+  value={height}
+  onChange={e => {
+    const val = e.target.value;
+    setHeight(val === "" ? "" : parseFloat(val));
+  }}
+/>
+```
+Das Ergebnis wird in einem Absatz angezeigt.<br/>
+```jsx
+<p>Du bist {height} Meter gross.</p>
+```
+
+### Interaktive Übung
+
+Ergänzen Sie die Sandbox oben um den useState Hook, das Input-Feld und die Ausgabe für das Alter.
+
+<LiveSandbox
+    storageKey="02_useState_heightfield"
+    code={
+        `function Person() {
+             return (
+               <>
+
+               </>
+             );
+         }`
+    }
+/>
