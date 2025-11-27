@@ -1,0 +1,68 @@
+import LiveSandbox from "./components/LiveSandbox.jsx";
+
+# Lesson 7 – Checkboxen
+
+Mit Checkboxen kann man eine Wahl treffen, ob etwas ein- oder ausgeschaltet ist.<br/>
+Oder ob man etwas auswählt oder nicht auswählt.
+
+<mark>Wichtig:</mark><br/>
+Jede Checkbox hat ihren eingen Zustand `true`or `false`.<br/>
+Mehrere Checkboxen teilen sich **NICHT** einen gemeinsamen Value!!
+
+---
+
+## Checkbox in React
+
+```jsx
+export default function App() {
+  const [isChecked, setIsChecked] = React.useState(false);
+
+  return (
+    <>
+      <label>
+        <input
+           type="checkbox"
+           checked={isChecked}
+           onChange={e => setIsChecked(e.target.checked)}
+        />
+        Check me!
+      </label>
+      <p>Checkbox is {isChecked ? "checked" : "not checked"}</p>
+    </>
+)
+```
+Erklärungen:
+- `type="checkbox"`: Definiert das Eingabefeld als Checkbox
+- `checked={isChecked}`: Bindet den Zustand der Checkbox an den State `isChecked`
+- `onChange={e => setIsChecked(e.target.checked)}`: Aktualisiert den State, wenn die Checkbox angeklickt wird.
+- `{isChecked ? "checked" : "not checked"}`: Wertet mit ? aus, ob isChecked `true` or `false`ist.<br/>
+   und zeigt den entsprechenden Text an.
+
+---
+
+### Interaktive Übung
+
+Erstellen Sie mehrere Checkboxen, damit man auswählen kann, ob man heute beim Essen dabei ist.<br/>
+Und eine Ausgabe, die auflistet, ob die Essen ausgewählt sind oder nicht.
+
+- Morgenessen
+- Mittagessen
+- Nachtessen
+
+Ergänzen Sie eine Ausgabe, welche Mahlzeiten ausgewählt sind.
+
+<LiveSandbox
+    storageKey="07_Checkbox_meals"
+    code={
+        `function Meals() {
+    return (
+        <>
+        </>
+    );
+}`
+    }
+/>
+
+### Interaktive Übung
+
+Verändern Sie die Ausgabe, so das ausgegeben wird `ich bin dabei` oder `ich esse auswärts`

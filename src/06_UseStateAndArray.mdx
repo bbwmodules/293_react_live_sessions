@@ -1,0 +1,150 @@
+import LiveSandbox from "./components/LiveSandbox.jsx";
+
+# Lesson 6 – UseState and array
+
+Auch ein UseState kann mit einem Array umgehen.
+
+---
+
+## UseState mit Array mit einzelnen Werten
+
+- Initialisierung: `const [items, setItems] = React.useState([]);`
+- Hinzufügen: `setItems(prev => [...prev, newItem]);`
+    - Der Spread-Operator `...` kopiert den alten Array-Inhalt, damit diese bestehen bleibt
+    - Und danach wird das neue Element `newItem` hinzugefügt.
+
+Beispiel:
+
+```jsx
+const [name, setName] = React.useState("");
+const [fruits, setFruits] = React.useState(["Apfel", "Banane"]);
+
+  function addFruit(newFruit) {
+    setFruits(prevFruits => [...prevFruits, newFruit]);
+  }
+
+  return (
+    <>
+        <input
+          value={name}
+          onChange={e => setName(e.target.value)}
+          placeholder="Enter fruit name"
+        />
+        <button onClick={addName}>Add</button>
+      </div>
+     ...
+     Ausgabe als Liste
+   </>
+```
+
+---
+
+## UseState mit Array mit Objekten
+
+Das Prinzip ist eigentlich eine Vervielfachung des vorherigen Beispiels.
+
+```jsx
+export default function App() {
+  // Eingabefelder
+  const [name, setName] = React.useState("");
+  const [color, setColor] = React.useState("");
+  const [seeds, setSeeds] = React.useState("");
+
+  // Früchte-Array als State
+  const [fruits, setFruits] = React.useState([
+    { name: "Apfel", color: "rot", numberOfSeeds: 6 },
+    { name: "Banane", color: "gelb", numberOfSeeds: 0 },
+    { name: "Kiwi", color: "grün", numberOfSeeds: 200 }
+  ]);
+
+  // Funktion zum Hinzufügen eines neuen Objekts
+  function addFruit() {
+    const newFruit = {
+      name: name,
+      color: color,
+      numberOfSeeds: parseInt(seeds, 10) || 0
+    };
+
+    setFruits(prev => [...prev, newFruit]);
+
+    // Felder zurücksetzen
+    setName("");
+    setColor("");
+    setSeeds("");
+  }
+
+  return (
+    <>
+      <input
+        value={name}
+        onChange={e => setName(e.target.value)}
+        placeholder="Name"
+      />
+
+      // Weitere gleiche Felder für color und seeds hinzufügen
+      ...
+
+      <button onClick={addFruit}>Hinzufügen</button>
+
+     ...
+     // Ausgabe als Tabelle
+    </>
+  );
+}
+
+
+
+```
+
+### Interaktive Übung
+
+Implementieren Sie eine Array mit Automarken und die Ausgabe als Liste.<br/>
+Ergänzen Sie die Möglichkeit über ein Feld und einen Button eine weitere Automarke hinzuzufügen.
+
+<LiveSandbox
+    storageKey="06_useStateAndArraySingle_name"
+    code={
+        `function Cars() {
+    return (
+        <>
+        </>
+    );
+}`
+    }
+/>
+
+### Interaktive Übung
+
+Ergänzen Sie einen Button, damit der Array geleert werden kann.
+
+---
+
+### Interaktive Übung
+
+Erstellen Sie einen Array mit Objekten, wo zu den Autos, Typ und Preis gespeichert sind.
+
+- Opel, Astra, 35000
+
+Geben Sie die Autos in einer Tabelle aus.<br/>
+Titel der Spalten:
+- Marke
+- Typ
+- Preis
+
+Ergänzen Sie die Möglichkeit über mehrere Feld und einen Button um weitere Autos hinzuzufügen.
+
+<LiveSandbox
+    storageKey="06_useStateAndArrayObject_name"
+    code={
+        `function MoreCars() {
+    return (
+        <>
+        </>
+    );
+}`
+    }
+/>
+
+### Interaktive Übung
+
+Ergänzen Sie einen Button, damit der Array geleert werden kann.

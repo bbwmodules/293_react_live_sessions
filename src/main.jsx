@@ -6,6 +6,9 @@ import Lesson01 from './01_Component.mdx'
 import Lesson02 from './02_UseState.mdx'
 import Lesson03 from './03_ButtonEventHandler.mdx'
 import Lesson04 from './04_FormEventHandler.mdx'
+import Lesson05 from './05_Array.mdx'
+import Lesson06 from './06_UseStateAndArray.mdx'
+import Lesson07 from './07_Checkboxen.mdx'
 
 const components = { React }
 
@@ -14,7 +17,10 @@ const lessons = {
     '1': { component: Lesson01, title: 'Komponente' },
     '2': { component: Lesson02, title: 'useState' },
     '3': { component: Lesson03, title: 'ButtonEventhandler' },
-    '4': { component: Lesson04, title: 'FormEventhandler' }
+    '4': { component: Lesson04, title: 'FormEventhandler' },
+    '5': { component: Lesson05, title: 'array' },
+    '6': { component: Lesson06, title: 'UseState and array' },
+    '7': { component: Lesson07, title: 'Checkbox' }
 }
 
 function App() {

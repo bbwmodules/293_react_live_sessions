@@ -1,0 +1,108 @@
+import LiveSandbox from "./components/LiveSandbox.jsx";
+
+# Lesson 5 – Array
+
+Mehrere gleichartige Daten werden in Arrays gespeichert.
+
+---
+
+## Aufbau eines Arrays mit Einzel-Werten
+
+Beispiel ist ein Array von Früchten.<br/>
+Die eckigen Klammern umrahmen/begrenzen den Array.<br/>
+Die einzelnen Werte sind durch ',' getrennt.<br/>
+Der Datentyp der Werte ist hier String (Text).<br/>
+Die `""` Anführungszeichen" umschliessen jeden einzlenen String-Wert.
+
+```jsx
+const fruits = ["Apfel", "Banane", "Kirsche"];
+```
+
+Ausgabe als ungeordnete Liste:
+
+```jsx
+<ul>
+  {fruits.map((fruit, index) => (
+    <li key={index}>{fruit}</li>
+  ))}
+</ul>
+```
+Erklärung:<br/>
+- `map` ist eine Array-Methode, die für jedes Element im Array eine Funktion ausführt und ein neues Array zurückgibt.<br/>
+- `key` ist ein spezielles Attribut in React, das hilft, Elemente in einer Liste eindeutig zu identifizieren. Hier wird der Index des Elements im Array verwendet.
+
+---
+
+## Aufbau eines Arrays mit Objekten
+
+Beispiel für ein Array von Objekten ist eine Aufzählung von Früchten mit zusätzlichen Eigenschaften der Früchte.<br/>
+Die geschweifte Klammern umrahmen/begrenzen die Objekte.<br/>
+Ein Objekt enthält ein oder mehrere key:value pairs, die durch ',' getrennt sind.
+
+Die Eigenschaften haben einen Namen und einen Wert, getrennt durch einen Doppelpunkt.<br/>
+Hier sind die Eigenschaften Name, Farbe und Anzahl der Kerne.
+
+```jsx
+const fruits = [
+   { name: "Apfel", color: "rot", numberOfSeeds: 6 },
+   { name: "Banane", color: "gelb", numberOfSeeds: 0 },
+   { name: "Kiwi", color: "grün", numberOfSeeds: 200 }
+];
+```
+
+Ausgabe als Tabelle:
+
+```jsx
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Farbe</th>
+      <th>Kerne</th>
+    </tr>
+  </thead>
+  <tbody>
+    {fruits.map((fruit, index) => (
+      <tr key={index}>
+        <td>{fruit.name}</td>
+        <td>{fruit.color}</td>
+        <td>{fruit.numberOfSeeds}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+```
+
+---
+
+### Interaktive Übung
+
+Erstellen Sie einen Array mit einfachen Werten (blau, rot, grün).<br/>
+Geben Sie den Array als geordnete Liste aus.
+
+<LiveSandbox
+    storageKey="05_arrayvalues_name"
+    code={
+        `function Colors() {
+    return (
+        <>
+        </>
+    );
+}`
+    }
+/>
+
+### Interaktive Übung
+
+Erstellen Sie einen Array mit Objekten, wo zu den Farben die RGB Werte gespeichert sind.
+
+- rot, 255, 0, 0
+- grün, 0, 255, 0
+- blau, 0, 0, 255
+
+Geben Sie den Array als Tabelle aus.<br/>
+Titel der Spalten:
+- Farbe
+- Rot
+- Grün
+- Blaud

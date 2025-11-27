@@ -78,6 +78,35 @@ function Formular(){
 }
 ```
 
+## Submit und weitere Button
+
+Es kann pro Form nur einen submit-Button geben!<br/>
+Diese kann unterschiedlich implementiert werden:
+
+```jsx
+   ...
+   <input type="submit" value="doit"/>
+   ...
+```
+oder
+
+```jsx
+   ...
+   <button type="submit">doit</button>
+   ...
+```
+Beispiel für einen weiteren Button, der kein submit-Button ist:
+
+```jsx
+   ...
+   function handlePrint(event) {
+      ...
+   }
+   ...
+   <button onClick={handlePrint}>print</button>
+   ...
+```
+
 ### Interaktive Übung
 
 Ergänzen Sie die Komponente so, dass sie einen Zähler enthält, der bei jedem Klick auf den Button um 1 erhöht wird.
@@ -101,7 +130,7 @@ return (
 ### Interaktive Übung
 
 Ergänzen Sie die Komponente um einen weiteren Button.<br/>
-Wird dieser gedrückt, so werden der Wert des Eingabefeldes und der Wert des Ergebnisses auf "" zurückgesetzt.
+Wird dieser gedrückt, so werden der Wert des Eingabefeldes und der Wert des Ergebnisses auf "" zurückgesetzt.<br/>
 
 ### Interaktive Übung
 
