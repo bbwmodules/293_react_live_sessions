@@ -1,0 +1,82 @@
+import LiveSandbox from "./components/LiveSandbox.jsx";
+import propsAndCallbacks from "./assets/propsAndCallbacks.png";
+
+# Lesson 10 – Props and Callbacks
+
+Teile ich meine Applikation in Komponenten auf, so muss ich Daten und Funktionen zwischen diesen Komponenten austauschen können.<br/>
+Dies geschieht über **Props** und **Callbacks**.
+
+<img src={propsAndCallbacks} alt="Props and Callbacks" style={{ height: "300px" }} />
+
+---
+
+## Anwendung von Props
+
+Die Probs können als Werte verstanden werden, die der Komponente übergeben werden.<br/>
+Zum Beispiel ein Text oder eine Zahl.<br/>
+Die Komponenten verwendet diese Werte zum Beispiel für Berechnungen oder Darstellung.<br/>
+Verwende ich die Komponete mehrfach, so kann ich über die Werte jede Instanz der Komponente individuell gestalten.
+
+Beispiel:
+```javascript
+function App() {
+    return (
+        <>
+            <Meal kind="Breakfast" />
+            <Meal kind="Lunch" />
+        </>
+    );
+}
+
+function Meals({kind}) {
+    return (
+        <>
+            <p>Ich bin ein {kind}</p>
+        </>
+    );
+}
+
+render (<App />);
+```
+**Erklärung:**<br/>
+- Die Parent-Component`App` benützt die Child-Component `Meal`.<br/>
+- **ACHTUNG**Normalerweise steht jede Komponente in einer eigenen Datei.<br/>
+  In der Sandbox sind die Komponenten der Übersicht halber direkt übereinander.<br/><br/>
+- Die Parent-Component App übergibt der Child-Component mit dem Prop `kind` einen individuellen Text.
+     - `kind="Breakfast"` für die erste Instanz
+     - `kind="Lunch"` für die zweite Instanz<br/><br/>
+- Die Child-Component `Meal` empfängt den Prop `kind` als Parameter in der Funktionsdefinition `{kind}`.<br/>
+- Und verwendet den Prop `kind` beim `<p>`.
+
+---
+
+### Interaktive Übung
+
+Ergänzen Sie ein weiteres Meal mit einem anderen `kind`, z.B. `Dinner`.
+
+<LiveSandbox
+    storageKey="10_Props_meal"
+    noInline={true}
+    code={
+        `function App() {
+    return (
+        <>
+            <Meal kind="Breakfast" />
+            <Meal kind="Lunch" />
+        </>
+    );
+}
+
+function Meal({kind}) {
+   return (
+      <>
+         <p>Ich bin ein {kind}</p>
+      </>
+   );
+}
+//Bei dieser Komponente mir Rendern beginnen.
+render (<App />);
+`}
+/>
+
+---
