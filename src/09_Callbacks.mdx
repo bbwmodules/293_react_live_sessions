@@ -1,0 +1,189 @@
+import LiveSandbox from "./components/LiveSandbox.jsx";
+import propsAndCallbacks from "./assets/propsAndCallbacks.png";
+import notenrechner from "./assets/notenrechner.png";
+import {useState} from "react"
+
+# Lesson 9 – Callbacks: Funktionen an Komponenten weitergeben
+
+Über **Callbacks** (Call-Back-Funktionen) kann ich Funktionen von der Parent- zur Child-Komponente übergeben.<br/>
+So kann die Child-Komponente zBsp eine Setter des Parents aufrufen, um im Parent einen Wert zu speichern.
+
+**ACHTUNG** Will ich Werte an die Parent-Komponente übergeben, dann muss ich dies über eine Callback-Funktion machen.
+
+<img src={propsAndCallbacks} alt="Props and Callbacks" style={{ height: "300px" }} />
+
+---
+
+## Anwendung von Callbacks
+
+Eine Wert an die Parent-Komponente übergeben.
+
+**Beispiel:**
+
+```javascript
+
+function InputField({value, setValue}) {
+    return (
+        <>
+            <label>Name:</label>
+            <input
+                type="text"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+            />
+        </>
+    );
+}
+
+function App() {
+    const [name, setName] = React.useState("");
+    return (
+        <>
+            <InputField value={name} setValue={setName} />
+            <p>Hallo {name || "Unbekannt"} </p>
+        </>
+    );
+}
+
+render (<App />);
+```
+**Erklärung:**<br/>
+- Die Child-Component Zeit den Props _value_ im Inputfeld an.
+- Wird das Inputfeld verändert, so ruft die Child-Component den Callback _setValue_ auf.<br/><br/>
+- Die Parent-Component _App_ definiert einen _UseState_, um den _value_ zu speichern.
+- Die Parent-Component App übergibt der Child-Component _InputField_ den _value_ als Props.
+- Und weiter den _Setter des Use-State_ als _Callback_, über den das Inputfeld den neuen Wert an die Parent-Component zurückgeben kann.
+
+---
+
+### Interaktive Übung
+
+Implementieren Sie die Komponente _InputField_.<br/>
+Und ergänzen Sie in der App-Komponente die UseStates und InputFields (inkl. Props & Callbacks) für die Eingabe und Anzeige von _Vorname_ und _Klasse_.<br/>
+Ergänzen Sie eine `<p>`das den Text ausgibt "Ich `-Vorname-` bin in der `-Klasse-`".
+
+<LiveSandbox
+    storageKey="09_Callbacks_inputfield1"
+    noInline={true}
+    code={
+        ` function InputField() {
+    return (
+      <>
+
+      </>
+   );
+}
+
+function App() {
+    return (
+        <>
+
+        </>
+    );
+}
+//Bei dieser Komponente mit Rendern beginnen.
+render (<App />);
+`}
+/>
+
+---
+
+## Callback für Eventhandler
+
+Via Callback kann nicht nur ein _setValue_ übergeben werden, sondern auch eine Funktion, die zBps. die Note berechnet.
+
+**Formel:**
+
+```text
+note = (punkte / maximalePunkte) * 5 + 1
+```
+<br/>
+**CustomButton-Komponente und Aufruf in der App-Komponente:**
+
+```javascript
+function CustomButton({onClick, label}) {
+    return (
+        <button onClick={onClick}>{label}</button>
+    );
+}
+
+function App() {
+    const [points, setPoints] = React.useState(0);
+    const [maximum, setMaximum] = React.useState(0);
+    const [grade, setGrade] = React.useState(0);
+
+    const calculateGrade = () => {
+        setGrade(points*5/maximum+1);
+    };
+
+    return (
+        <>
+            ...
+            <CustomButton onClick={calculateGrade} label="Note berechnen" />
+            <p>Note: {grade}</p>
+        </>
+    );
+}
+```
+
+Wie war das nochmals? Wie liest man eine Zahl ein?
+
+```jsx
+<input
+  type="number"
+  inputMode="numeric"
+  value={value}
+  onChange={e => {
+    const val = e.target.value;
+    setValue(val === "" ? "" : parseInt(val, 10));
+  }}
+/>
+```
+
+---
+
+### Interaktive Übung
+
+Implementieren Sie einen einfachen Notenrechner.<br/>
+<mark>Nutzen Sie die obigen _Information / Bausteine..._</mark>
+
+**Komponenten:**<br/>
+- InputNumber: Input-Feld für Zahlen
+- CustomButton: Button ruft Eventhandler von Parent auf
+- App: Speichert alle Daten, führt die Berechnung der Note aus.
+
+<img src={notenrechner} alt="Notenrechner" style={{ height: "200px" }} />
+
+<LiveSandbox
+    storageKey="09_Callbacks_inputfield2"
+    noInline={true}
+    code={
+        `function InputNumber() {
+   return (
+      <>
+
+      </>
+   );
+}
+
+function CustomButton() {
+   return (
+      <>
+
+      </>
+   );
+}
+
+function App() {
+   return (
+      <>
+        <p>Note: </p>
+      </>
+   );
+}
+//Bei dieser Komponente mit Rendern beginnen.
+render (<App />);
+`}
+/>
+
+---

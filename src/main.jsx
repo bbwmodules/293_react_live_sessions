@@ -9,7 +9,8 @@ import Lesson04 from './04_FormEventHandler.mdx'
 import Lesson05 from './05_Array.mdx'
 import Lesson06 from './06_UseStateAndArray.mdx'
 import Lesson07 from './07_Checkboxen.mdx'
-import Lesson10 from './10_PropsCallbacks.mdx'
+import Lesson08 from './08_Props.mdx'
+import Lesson09 from './09_Callbacks.mdx'
 
 const components = { React }
 
@@ -22,7 +23,8 @@ const lessons = {
     '5': { component: Lesson05, title: 'array' },
     '6': { component: Lesson06, title: 'UseState and array' },
     '7': { component: Lesson07, title: 'Checkbox' },
-    '10': { component: Lesson10, title: 'Props and callbacks' }
+    '8': { component: Lesson08, title: 'Props' },
+    '9': { component: Lesson09, title: 'Callbacks' }
 }
 
 function App() {

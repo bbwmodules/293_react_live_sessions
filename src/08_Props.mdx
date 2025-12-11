@@ -1,0 +1,115 @@
+import LiveSandbox from "./components/LiveSandbox.jsx";
+import propsAndCallbacks from "./assets/propsAndCallbacks.png";
+
+# Lesson 8 – Props: Parameter an Komponenten weitergeben
+
+Teile ich meine Applikation in Komponenten auf, so muss ich Daten und Funktionen zwischen diesen Komponenten austauschen können.<br/>
+Mit Hilfe von **Probs** kann ich Daten vom der Parent- zur Child-Komponente übermitteln.<br/>
+Über **Callbacks** (Call-Back-Funktionen) kann ich Funktionen von der Parent- zur Child-Komponente übergeben.<br/>
+So kann die Child-Komponente zBsp eine Setter des Parents aufrufen, um im Parent einen Wert zu speichern.
+
+
+<img src={propsAndCallbacks} alt="Props and Callbacks" style={{ height: "300px" }} />
+
+---
+
+## Anwendung von Props
+
+Die Probs können als Werte verstanden werden, die der Child-Komponente übergeben werden.<br/>
+Zum Beispiel ein _Text_ oder eine _Zahl_.<br/>
+Die Komponenten verwendet diese Werte für Berechnungen oder Darstellung.<br/>
+Verwende ich die Komponente mehrfach, so kann ich über die Werte jede Instanz der Komponente individuell gestalten.
+
+**Beispiel:**
+
+Hinweis: Normalerweise steht jede Komponente in einer eigenen Datei.<br/>
+In der Sandbox sind die Komponenten der Übersicht halber direkt übereinander.
+
+```javascript
+function Meals({value}) {
+    return (
+        <>
+            <p>Ich bin ein {value}</p>
+        </>
+    );
+}
+
+function App() {
+    return (
+        <>
+            <Meal value="Breakfast" />
+            <Meal value="Lunch" />
+        </>
+    );
+}
+
+render (<App />);
+```
+**Erklärung:**<br/>
+- Die Child-Component _Meal_ empfängt den Prop _value_ als Parameter in der Funktionsdefinition `{value}`.<br/>
+- Und verwendet den Prop _value_ beim `<p>`.
+- Die Parent-Component _App_ benützt die Child-Component _Meal_.<br/>
+- Die Parent-Component App übergibt der Child-Component mit dem Prop `kind` einen individuellen Value.
+   - _value="Breakfast"_ für die erste Instanz
+   - _value="Lunch"_ für die zweite Instanz<br/><br/>
+
+---
+
+### Interaktive Übung
+
+Implementieren Sie das obige Beispiel in der Sandbox.<br/>
+Ergänzen Sie eine weitere Instanz der Komponente _Meal_ für das _Dinner_.
+
+<LiveSandbox
+    storageKey="08_Props_meal"
+    noInline={true}
+    code={`function Meal() {
+   return (
+      <>
+
+      </>
+   );
+}
+
+function App() {
+    return (
+        <>
+            <h4>Für Spies und Trank</h4>
+
+        </>
+    );
+}
+//Bei dieser Komponente mit Rendern beginnen.
+render (<App />);
+`}
+/>
+
+---
+
+## Mehrere Props
+
+Man kann einer Child-Komponente auch mehrere Probs übergeben.
+
+**Beispiel:**
+
+```javascript
+
+function Meals({value, calories}) {
+...
+    <p>Ich bin ein {value} mit {calories} Kalorien.</p>
+...
+}
+
+function App() {
+...
+    <Meal value="Breakfast" calories={300} />
+...
+
+```
+---
+
+### Interaktive Übung
+
+Fügen Sie oben in der Sandbox einen Prop für Kalorien und ob _Vegan oder nicht_ hinzu.
+
+---
