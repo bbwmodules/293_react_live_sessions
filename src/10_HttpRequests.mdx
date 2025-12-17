@@ -1,0 +1,176 @@
+import LiveSandbox from "./components/LiveSandbox.jsx";
+import google from "./assets/google.png";
+import googleformulare from "./assets/googleformulare.png";
+
+# Lesson 10 – Http Request / Response
+
+Client (Browser) und der Webserver kommunizieren über das HTTP-Protokoll.<br/>
+Der Server definiert verschiedene **Endpoints** (Adressen), die der Client anfragen kann.<br/>
+Der Client sendet einen **Request** (Anfrage) an den Server.<br/>
+Der Server verarbeitet die Anfrage und sendet eine **Response** (Antwort) zurück an den Client.<br/>
+
+## Möglichkeiten einen Request auszulösen
+
+Es gibt verschiedene Möglichkeiten, eine Request auszulösen:
+
+- Wenn Sie im Browser direkt die URL eingeben.
+- Wenn Sie auf einen Link klicken.
+- Wenn Sie ein Formular absenden.
+- Wenn Sie in JavaScript die Funktion `fetch()` oder eine Bibliothek wie `axios` verwenden.
+
+
+Auch Server können Requests an andere Server senden, zBsp. um Daten von einer API abzurufen.<br/>
+  Dann wird der Request sendende Server zum Client (aber ohne Browser ;-) )
+
+---
+
+## Request über Links auslösen
+
+Ein Hyperlink wird mit dem `<a>`-Tag erstellt.<br/>
+Ein Klick auf den Link löst einen _HTTP-GET-Request_d an die im `href`-Attribut angegebene URL.<br/>
+Der durch die URL definierte Server sendet als Antwort, den HTML-Code der angeforderten Webseite.<br/>
+(es kann auch ein Bild, eine Datei sein.
+
+Beispiel:
+
+```html
+<a href="https://google.com">Go to Google</a>
+```
+<img src={google} alt="Google" style={{ height: "120px" }} />
+
+Fügt man beim Request der URL Parameter hinzu, so reagiert der Server spezifisch auf diese Parameter-Werte.<br/>
+
+Beispiel:
+
+```html
+<a href="https://www.google.ch/search?q=HTML+Formulare">Such HTML + Formulare</a>
+```
+
+<img src={googleformulare} alt="Google Formulare" style={{ height: "170px" }} />
+
+Erklärung:<br/>
+- Der Link zeigt auf die Google-Suchseite.<br/>
+- Das _?_ trennt die Basis-URL von den Parametern ab.<br/>
+- Der Parameter _q_ in der URL enthält den Suchbegriff "HTML Formulare".<br/>
+  Die Worte HTML und Formulare sind durch ein Pluszeichen (+) getrennt, das für ein Leerzeichen steht.<br/>
+
+---
+
+### Interaktive Übung zu link
+
+**Wichtig**:
+
+- Die bestehenden `<div> ...</div>`-Tags nicht löschen
+- Weitere `<div>` tags um die `<a>` Tags hinzufügen, damit die Links untereinander stehen.
+
+Aufgabe:<br/>
+
+- Übernehmen Sie die beiden obigen Beispiele.
+- Und klicken Sie in der Preview auf die Links.
+
+Erweiterung:<br/>
+
+- Erstellen Sie einen Link, der auf der Suchmaschine nach _Auto und Monteverdi_ sucht.
+
+<LiveSandbox
+    storageKey="10_Requests_link"
+    noInline={false}
+    code={`<div>
+   <p>Ein paar Versuche mit links</p>
+</div>
+`}
+/>
+
+---
+
+## Request über Form-Tag auslösen
+
+Ein Formular wird mit dem `<form>`-Tag erstellt.<br/><br/>
+Beim Absenden des Formulars wird ein HTTP-Request an die im `action`-Attribut angegebene URL gesendet.<br/>
+Der Typ des Requests wird durch das `method`-Attribut definiert (GET oder POST).<br/>
+Die im Formular eingegebenen Daten werden als Parameter an die URL angehängt (GET) oder im Body des Requests gesendet (POST).<br/>
+
+Beispiel:
+
+```html
+<form action="https://www.google.ch/search" method="GET">
+    <label for="suchbegriff">Suchbegriff:</label>
+    <input type="text" id="suchbegriff" name="q" />
+    <button type="submit">Suchen</button>
+</form>
+```
+
+### Interaktive Übung zu form
+
+**Wichtig**: `<div>` Tag nicht entfernen
+
+Aufgabe:<br/>
+- Übernehmen Sie das obige Formular-Beispiel.
+- Geben Sie einen Suchbegriff ein zBsp. Katze. Und klicken Sie auf Suchen.
+- Geben Sie einen Suchbegriff mit zwei Worten ein zBsp. Katzen Hai. Und klicken Sie auf Suchen.
+    - Betrachten Sie die URL in der Adresszeile des Browsers.<br/><br/>
+- Ändern Sie `name="q"` zu `name="query"` und testen Sie das Formular erneut.
+    - Betrachten Sie die URL in der Adresszeile des Browsers.<br/><br/>
+- Ändern Sie `name="query"` zu `name="find"` und testen Sie das Formular erneut.
+    - Betrachten Sie die URL in der Adresszeile des Browsers.
+
+<LiveSandbox
+    storageKey="10_Requests_form1"
+    noInline={false}
+    code={`<div>
+   <p>Ein paar Versuche mit form</p>
+</div>
+`}
+/>
+
+---
+
+## Request über input oder button Tag und javascript
+
+Wenn man auf einen Button klickt, kann ein JavaScript-Code ausgeführt werden.<br/>
+Und damit kann man eine location.ref = "URL" Request auslösen<br/>
+
+Beispiel:
+
+```html
+<button
+  onClick={() => {
+    console.log("Button geklickt");
+    (window.location.href = "https://www.google.ch/search?q=React+JS")
+  }}>
+  Suche React JS
+</button>
+
+```
+
+```html
+<input
+    type="button"
+    value="Suche Vue JS"
+    onClick= `hier kommt der JavaScript-Code hin`
+/>
+```
+
+### Interaktive Übung zu button
+
+**Wichtig**: `<div>` Tag nicht entfernen
+
+Aufgabe:
+
+- Übernehmen Sie die Beispiele mit dem `<button>` Tag. und `<input>` Tag.
+- Klicken Sie auf den Button.
+    - Betrachten Sie die URL in der Adresszeile des Browsers.<br/><br/>
+- Übernehmen Sie das Beispiel mit dem `<input>` Tag.<br/>
+  ACHTUNG Sie müssen den JavaScript-Code ergänzen!<br/>
+- Klicken Sie auf den Input-Button.
+    - Betrachten Sie die URL in der Adresszeile des Browsers.
+
+<LiveSandbox
+    storageKey="10_Requests_form2"
+    noInline={false}
+    code={`<div>
+   <p>Ein paar Versuche mit button</p>
+</div>
+`}
+/>
+
