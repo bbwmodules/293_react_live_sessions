@@ -1,44 +1,50 @@
 import LiveSandbox from "./components/LiveSandbox.jsx";
 import google from "./assets/google.png";
 import googleformulare from "./assets/googleformulare.png";
+import client_server from "./assets/client-server-api.png";
 
-# Lesson 10 – Http Request / Response
+# Lesson 10 – Http Request / Response mit HTML+JS
 
-Client (Browser) und der Webserver kommunizieren über das HTTP-Protokoll.<br/>
-Der Server definiert verschiedene **Endpoints** (Adressen), die der Client anfragen kann.<br/>
-Der Client sendet einen **Request** (Anfrage) an den Server.<br/>
-Der Server verarbeitet die Anfrage und sendet eine **Response** (Antwort) zurück an den Client.<br/>
+Für die Kommunikation wird das http Protokoll verwendet.<br/>
+Die **Webapplikation** definiert verschiedene **Endpoints** (Adressen), die der Client anfragen kann.<br/>
+Der **Client (Browser)** sendet einen **Request** (Anfrage) an den **Webserver**.<br/>
+Der Webserver leitet den Request an die Webapplikation weiter.<br/>
+Die Webapplikation verarbeitet die Anfrage.<br/>
+Auch Webapplikation können Requests an andere Server (API-Server) senden, zBsp. um Daten von einer API abzurufen.<br/>
+Der API-Server sendet eine **Response** (Antwort) zurück an die Webapplikation. Oft im JSON Format.<br/>
+Die Webapplikation bereitet die Daten auf, erstellt eine **Response** (Antwort) und sendet über den Webserver zurück an den Client.
+
+<img src={client_server} alt="Client-Server-http" style={{ height: "400px" }} />
+
 
 ## Möglichkeiten einen Request auszulösen
 
 Es gibt verschiedene Möglichkeiten, eine Request auszulösen:
 
-- Wenn Sie im Browser direkt die URL eingeben.
-- Wenn Sie auf einen Link klicken.
-- Wenn Sie ein Formular absenden.
-- Wenn Sie in JavaScript die Funktion `fetch()` oder eine Bibliothek wie `axios` verwenden.
-
-
-Auch Server können Requests an andere Server senden, zBsp. um Daten von einer API abzurufen.<br/>
-  Dann wird der Request sendende Server zum Client (aber ohne Browser ;-) )
+- Wenn Sie **direkt die URL im Browser** eingeben.
+- Wenn Sie auf in einer Webseite auf einen **Link klicken**.
+- Wenn Sie ein **submit bei einem Formular** absenden.
+- Wenn Sie in zBsp durch **onClick über JavaScript** ein `fetch()` oder eine Bibliothek wie `axios` aufrufen.
 
 ---
 
-## Request über Links auslösen
+## Request über Link auslösen
 
-Ein Hyperlink wird mit dem `<a>`-Tag erstellt.<br/>
-Ein Klick auf den Link löst einen _HTTP-GET-Request_d an die im `href`-Attribut angegebene URL.<br/>
-Der durch die URL definierte Server sendet als Antwort, den HTML-Code der angeforderten Webseite.<br/>
-(es kann auch ein Bild, eine Datei sein.
+Der Hyperlink wird mit dem `<a>`-Tag erstellt.<br/>
+Ein Klick auf den Link löst einen _HTTP-GET-Request_ an die im `href`-Attribut angegebene URL.<br/>
+Der durch die URL definierte Server sendet als Antwort des angeforderten Endpoints.<br/>
+In der Regel HTML der angeforderten Webseite.<br/>
+Oder ein Bild als JPG, PNG ... Oder eine Text-Datei ... oder ...
 
 Beispiel:
 
 ```html
 <a href="https://google.com">Go to Google</a>
 ```
+
 <img src={google} alt="Google" style={{ height: "120px" }} />
 
-Fügt man beim Request der URL Parameter hinzu, so reagiert der Server spezifisch auf diese Parameter-Werte.<br/>
+Fügt man beim Request **URL Parameter** hinzu, so reagiert der Server spezifisch auf diese **Parameter-Werte**.<br/>
 
 Beispiel:
 
@@ -56,19 +62,19 @@ Erklärung:<br/>
 
 ---
 
-### Interaktive Übung zu link
+## Interaktive Übung zum Link
 
 **Wichtig**:
 
 - Die bestehenden `<div> ...</div>`-Tags nicht löschen
 - Weitere `<div>` tags um die `<a>` Tags hinzufügen, damit die Links untereinander stehen.
 
-Aufgabe:<br/>
+**Aufgabe:**
 
 - Übernehmen Sie die beiden obigen Beispiele.
 - Und klicken Sie in der Preview auf die Links.
 
-Erweiterung:<br/>
+**Erweiterung:**
 
 - Erstellen Sie einen Link, der auf der Suchmaschine nach _Auto und Monteverdi_ sucht.
 
@@ -76,14 +82,14 @@ Erweiterung:<br/>
     storageKey="10_Requests_link"
     noInline={false}
     code={`<div>
-   <p>Ein paar Versuche mit links</p>
+   <p>Request per Link</p>
 </div>
 `}
 />
 
 ---
 
-## Request über Form-Tag auslösen
+## Request über Formulare auslösen
 
 Ein Formular wird mit dem `<form>`-Tag erstellt.<br/><br/>
 Beim Absenden des Formulars wird ein HTTP-Request an die im `action`-Attribut angegebene URL gesendet.<br/>
@@ -100,11 +106,19 @@ Beispiel:
 </form>
 ```
 
-### Interaktive Übung zu form
+Erklärung:<br/>
+- method="GET" :  Es ist ein GET-Request.<br/>
+- name="q" : q ist später der Name des Request-Parameters. Google erkennt diesen Namen.
+- Der Eingabe in das Inputfeld wird als Wert des Parameters _q_ an die URL angehängt.
+
+---
+
+## Interaktive Übung zum Formular
 
 **Wichtig**: `<div>` Tag nicht entfernen
 
-Aufgabe:<br/>
+**Aufgabe:**
+
 - Übernehmen Sie das obige Formular-Beispiel.
 - Geben Sie einen Suchbegriff ein zBsp. Katze. Und klicken Sie auf Suchen.
 - Geben Sie einen Suchbegriff mit zwei Worten ein zBsp. Katzen Hai. Und klicken Sie auf Suchen.
@@ -118,17 +132,17 @@ Aufgabe:<br/>
     storageKey="10_Requests_form1"
     noInline={false}
     code={`<div>
-   <p>Ein paar Versuche mit form</p>
+   <p>Request per Formular</p>
 </div>
 `}
 />
 
 ---
 
-## Request über input oder button Tag und javascript
+## Request über Button und javascript
 
 Wenn man auf einen Button klickt, kann ein JavaScript-Code ausgeführt werden.<br/>
-Und damit kann man eine location.ref = "URL" Request auslösen<br/>
+Und damit kann man über die _location.ref = "URL"_ einen Request auslösen.
 
 Beispiel:
 
@@ -143,6 +157,8 @@ Beispiel:
 
 ```
 
+Variante über `<input>` Tag type="button":
+
 ```html
 <input
     type="button"
@@ -151,26 +167,83 @@ Beispiel:
 />
 ```
 
-### Interaktive Übung zu button
+---
 
-**Wichtig**: `<div>` Tag nicht entfernen
+## Interaktive Übung zu Button
 
-Aufgabe:
+**Wichtig**:
 
-- Übernehmen Sie die Beispiele mit dem `<button>` Tag. und `<input>` Tag.
-- Klicken Sie auf den Button.
-    - Betrachten Sie die URL in der Adresszeile des Browsers.<br/><br/>
+- `<div>` Tag nicht entfernen
+- Vorsichtig sein, die vielen Klammern sind tricky.
+
+**Aufgabe:**
+
+- Übernehmen Sie das Beispiel mit dem `<button>` Tag.
+- Testen Sie, ob der Button funktioniert.
+- Wie ist die URL im Browser zusammengesetzt?<br/><br/>
 - Übernehmen Sie das Beispiel mit dem `<input>` Tag.<br/>
-  ACHTUNG Sie müssen den JavaScript-Code ergänzen!<br/>
-- Klicken Sie auf den Input-Button.
-    - Betrachten Sie die URL in der Adresszeile des Browsers.
+- ACHTUNG: Sie müssen den JavaScript-Code ergänzen!<br/>
+- Testen Sie, ob der Button funktioniert.
+- Wie ist die URL im Browser zusammengesetzt?
 
 <LiveSandbox
     storageKey="10_Requests_form2"
     noInline={false}
     code={`<div>
-   <p>Ein paar Versuche mit button</p>
+   <p>Request per Button</p>
 </div>
 `}
 />
+
+---
+
+## Interaktive Aufgabe: Kombination von Input und Button
+
+Eingabe des Suchstrings über ein Inputfeld
+
+```html
+<input id="query" placeholder="Suchbegriff" />
+```
+
+Aktivierung über Button
+
+```html
+<button
+  onClick= {() => {
+    console.log("Button geklickt");
+    {/* hier kommt das weitere Script */}
+  }}
+>
+  Suche
+</button>
+```
+
+Das JavaScript holt den Wert des Input-Feldes mit der id="query" und hängt in an URL an.<br/>
+
+**ACHTUNG:** Das ist mal ausnahmsweise reines JavaScript und nicht React! React verwendet _document.getElementById_ nicht!
+
+```html
+    const q = document.getElementById("query").value;
+    window.location.href =
+      "https://www.google.ch/search?q=" + encodeURIComponent(q);
+```
+
+**Aufgabe:**
+
+- Bauen Sie Input, Button und das JavaScript zusammen.
+- Testen Sie die Funktionalität.
+
+<LiveSandbox
+    storageKey="10_Requests_buttonAndInput"
+    noInline={false}
+    code={`<div>
+   <p>Request per Input and Button</p>
+</div>
+`}
+/>
+
+
+
+
+
 

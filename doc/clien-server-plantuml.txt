@@ -1,0 +1,23 @@
+@startuml
+title HTTP Ablauf: User → Browser → Webserver → Webapplikation → API
+
+actor User
+participant "Browser" as B
+participant "Webserver" as WS
+participant "Webapplikation" as WA
+participant "API-Server" as API
+
+User -> B: URL eingeben / Klick
+B -> WS: HTTP Request\nz.B. GET /seite
+WS -> WA: Request weitergeben
+
+WA -> WA: Verarbeitung / Logik\nRuft API auf
+WA -> API: HTTP Request\nz.B. GET /allUsers
+API --> WA: HTTP Response\nJSON-Daten
+WA -> WA: Aufbereitung / Logik
+
+WA --> WS: HTTP Response
+WS --> B: HTTP Response
+B --> User: Seite anzeigen
+
+@enduml
