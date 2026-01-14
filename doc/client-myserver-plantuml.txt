@@ -1,0 +1,19 @@
+@startuml
+title HTTP Get Request sendet Daten an meinServer.bbw.ch
+
+actor User
+participant "Browser" as B
+participant "meinServer.bbw.ch" as WS
+participant "Logik" as WA
+
+User -> B:  / Klick
+B -> WS: HTTP Request\nz.B. name+adress
+WS -> WA: Daten weitergeben
+
+WA -> WA: Verarbeitung
+
+WA --> WS: Ergebnis
+WS --> B: HTTP Response\nMit Ergebnis
+B --> User: Ergebnis anzeigen
+
+@enduml

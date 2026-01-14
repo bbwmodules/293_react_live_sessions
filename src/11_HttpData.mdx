@@ -1,0 +1,197 @@
+import LiveSandbox from "./components/LiveSandbox.jsx";
+import client_myserver from "./assets/client-myserver.png";
+import client_webhook from "./assets/client-webhook.png";
+
+# Lesson 11 – Http Datenübertragen
+
+## Daten mit Requests senden
+
+Oft werden mit einem Request auch Daten an einen Server gesendet.<br/>
+Sie habe zuvor bei den Request bereits kennengelernt, die Stichworte für eine Suche bei Google mitgibt.<br/>
+ZBsp. der Suchbegriff "HTML Formulare".<br/>
+```text
+https://www.google.ch/search?q=HTML+Formulare
+```
+Aus Formularen können aber auch komplexere Daten an einen Server gesendet werden.<br/>
+ZBsp _Name und Adresse_ an den fiktiven Server _meinServer.bbw.ch_ <br/>
+
+```text
+Paul Muster
+Pionierstrasse 28
+8404 Winterthur
+```
+
+```text
+#Get Request mit URL-Parametern
+https://meinServer.bbw.ch/personen?name=Paul+Muster&street=Pionierstrasse+28&plz=8404&city=Winterthur
+```
+Beim Post Request werden die Daten im **Body** des Requests gesendet.<br/>
+Beispiel:
+```text
+#Post Request mit Body
+POST https://meinServer.bbw.ch/personen
+Content-Type: application/x-www-form-urlencoded
+name=Paul+Muster&street=Pionierstrasse+28&plz=8404&city=Winterthur
+```
+
+Oder heute häufiger beim Post Request im JSON Format:<br/>
+Beispiel:
+```text
+#Post Request mit JSON
+POST https://meinServer.bbw.ch/personen
+Content-Type: application/json
+{
+  "name": "Paul Muster",
+  "street": "Pionierstrasse 28",
+  "plz": 8404,
+  "city": Winterthur"
+}
+```
+<img src={client_myserver} alt="Client-MyServer-http" style={{ height: "400px" }} />
+
+---
+
+### Übertragene Daten sichtbar machen und analysieren
+
+Nun werden Sie **Daten an einen Server schicken** und die **übertragen Daten sichtbar machen** und analysieren.<br/>
+Den Request lösen Sie hier in der Lesson aus.<br/>, sichtbar machenIn dieser Lession werden Sie die Daten, die an einer Server geschickt werden sichtbar machen.<br/>
+Und als Server verwenden wir einen **Web-hook Dienst**.
+
+Was ist ein Web-hook Dienst?<br/>
+Ein Web-hook Dienst ist ein Online-Dienst, der es ermöglicht, **HTTP-Anfragen (Requests) zu empfangen und deren Inhalt anzuzeigen**.<br/>
+Er wird für Testzwecke verwendet, um zu überprüfen, welche Daten von einem Client an einen Server gesendet werden.<br/>
+Der Vorteil ist, dass der **Client-Server-Kommunikation simuliert** werden kann, ohne einen eigenen Server einrichten zu müssen.
+
+Des Ergebnis zeigt er Webhook auf seiner Webseite an.
+
+<img src={client_webhook} alt="Client-Webhook-http" style={{ height: "400px" }} />
+
+---
+
+## Interaktive Übung Analyse mit Developer Tools
+
+Es ist ein einfaches Formular vorbereite.<br/>
+ACHTUNG den Webserver myserver.bbw.ch gibt es nicht wirklich.<br/>
+Wenn wir einen Request absenden, dann wird eine Fehlermeldung angezeigt.<br/>
+Trotzdem können wir die Daten des Requests untersuchen.<br/>
+Dazu verwenden zunächst die Developertools des Browsers (Netzwerk-Tab).
+
+**Aufgabe:**
+
+- Lesen Sie zunächst die Seite 2 aus dem Dokument: 25.3_HTTPRequestAnalysieren.pdf.
+- Geben Sie in das Formular einen Vornamen und Nachnamen ein und lösen Sie den Request aus.
+- Untersuchen Sie den Request im Netzwerk-Tab der Developertools.
+    - Header und Payload
+
+weiter:
+
+- Frage: Wo stehen im Formular stehen die Bezeichnungen der Felder im Payload?
+- Zurück auf die Lesson Seite kommen Sie mit dem Zurück-Button des Browsers.
+
+weiter:
+
+- Ändern Sie die Methode im Formular von _get_ zu _post_.
+- Wiederholen Sie den Request und untersuchen Sie den Request im Netzwerk-Tab der Developertools.
+    - Header und Payload
+- Vergleichen Sie _get_ und _post_ in Bezug auf die in der Theorie behandelten Unterschiede.
+- Frage: Wie hat sich der Payload verändert?
+
+Formular:
+
+<LiveSandbox
+    storageKey="11_HttpData01"
+    code={
+        `function Formular() {
+    return (
+      <form
+        action="https://myserver.bbw.ch/addperson"
+        method="get"
+      >
+        <div>
+          <label>First name:</label>
+          <input type="text" name="firstname"/>
+        </div>
+        <div>
+          <label>Last name:</label>
+          <input type="text" name="lastname"/>
+        </div>
+        <input type="submit" value="Submit"/>
+      </form>
+    );
+  }`
+}
+/>
+
+---
+
+## Interaktive Übung Analyse mit Webhook
+
+Nun ersetzen Sie den fiktiven Server myserver.bbw.ch durch einen Webhook Dienst.<br/>
+
+**Aufgabe:**
+
+- Lesen Sie zunächst die Seite 3 bis 4 aus dem Dokument: 25.3_HTTPRequestAnalysieren.pdf.
+
+weiter:
+
+- Öffnen Sie in einem neuen Fenster des Browser die Webseite: https://webhook.site/
+- Ändern Sie unten im vorbereiten Formual die URL auf Ihre Webhook URL.
+- Geben Sie in das Formular einen Vornamen und Nachnamen ein und lösen Sie den Request aus.
+- Schauen Sie im Browser-Fenster der Webhook.site die Reaktion an.
+    - Untersuchen Header, Query strings und Form values
+
+weiter:
+
+- Ändern Sie den Request auf _post_.
+- Wiederholen Sie den Request und untersuchen Sie die Reaktion der Webhook.site.
+
+<LiveSandbox
+    storageKey="11_HttpData02"
+    code={
+        `function Formular() {
+    return (
+      <form
+        action="https://webhook.site/6046a3a8-86bc-4e7b-bf05-796921b8c50c"
+        method="get"
+      >
+        <div>
+          <label>First name:</label>
+          <input type="text" name="firstname"/>
+        </div>
+        <div>
+          <label>Last name:</label>
+          <input type="text" name="lastname"/>
+        </div>
+        <input type="submit" value="Submit"/>
+      </form>
+    );
+  }`
+    }
+/>
+
+---
+
+## Interaktive Übung Antwort vom Webhook konfigurieren
+
+**Aufgabe:**
+
+- Lesen Sie zunächst die Seite 5 aus dem Dokument: 25.3_HTTPRequestAnalysieren.pdf.
+
+weiter:
+
+- Konfigurieren Sie eine Antwort im Webhook Dienst.
+- Die Antwort macht allerdings im Kontext der React-Lession nicht direkt Sinn, sie zeigt das Prinzip.<br/>
+  Wenn wir mit der Antwort etwas anfangen möchten, dann müsste unsere React-Lession die Antwort auswerten.<br/>
+  Das kommt später.
+
+---
+
+## Übung Unterschied Webhook.site zu Postman.com
+
+**Aufgabe:**
+
+- Postman ist sehr mächtig. Oft wird es verwendet um ein Application-Interface (API) zu testen.
+- Finden Sie heraus, was der Hauptunterschied zwischen Webhook.site und Postman.com ist.<br/>
+  Was der Unterschied zwischen dem ist, was wir gemacht haben und dem, was Postman beim Testen einer API macht.
+   - Recherchieren
+   - Austauschen mit Lernpartner

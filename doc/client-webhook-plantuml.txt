@@ -1,0 +1,17 @@
+@startuml
+title HTTP Get Request sendet Daten an Web-hook-Dienst
+
+actor User
+participant "Browser-Window" as B1
+
+participant "Web-hook Dienst" as WD
+participant "Web-hook Webpage" as WW
+participant "Browser-Window" as B2
+
+User -> B1:  / Klick
+B1 -> WD: HTTP Request\nz.B. name+adress
+WD -> WW: Daten weitergeben, darstellen
+WW --> B2: Ergebnis
+B2 -> User: show
+
+@enduml

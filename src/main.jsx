@@ -12,6 +12,7 @@ import Lesson07 from './07_Checkboxen.mdx'
 import Lesson08 from './08_Props.mdx'
 import Lesson09 from './09_Callbacks.mdx'
 import Lesson10 from './10_HttpRequests.mdx'
+import Lesson11 from './11_HttpData.mdx'
 
 const components = { React }
 
@@ -26,7 +27,8 @@ const lessons = {
     '7': { component: Lesson07, title: 'Checkbox' },
     '8': { component: Lesson08, title: 'Props' },
     '9': { component: Lesson09, title: 'Callbacks' },
-    '10': { component: Lesson10, title: 'Requests' }
+    '10': { component: Lesson10, title: 'Requests' },
+    '11': { component: Lesson11, title: 'HTTP-Daten' }
 }
 
 function App() {
