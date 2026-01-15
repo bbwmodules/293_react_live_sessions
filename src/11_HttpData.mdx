@@ -6,9 +6,10 @@ import client_webhook from "./assets/client-webhook.png";
 
 ## Daten mit Requests senden
 
-Oft werden mit einem Request auch Daten an einen Server gesendet.<br/>
-Sie habe zuvor bei den Request bereits kennengelernt, die Stichworte für eine Suche bei Google mitgibt.<br/>
-ZBsp. der Suchbegriff "HTML Formulare".<br/>
+In der Lesson 10 ging es vorallem darum, wie ein Request mit HTML ausgelöst werden kann.<br/>
+Die Antwort war in der Regel eine neue HTML Seite. zBsp. die Suchergebnisseite von Google.<br/>
+Es wurden bei diesen Requests auch Daten übermittelt, zBsp. der Suchbegriff.
+
 ```text
 https://www.google.ch/search?q=HTML+Formulare
 ```
@@ -47,34 +48,28 @@ Content-Type: application/json
   "city": Winterthur"
 }
 ```
+So sieht das Zusammenspiel Client-Server bei einem HTTP Request aus:
+
 <img src={client_myserver} alt="Client-MyServer-http" style={{ height: "400px" }} />
 
 ---
 
 ### Übertragene Daten sichtbar machen und analysieren
 
-Nun werden Sie **Daten an einen Server schicken** und die **übertragen Daten sichtbar machen** und analysieren.<br/>
-Den Request lösen Sie hier in der Lesson aus.<br/>, sichtbar machenIn dieser Lession werden Sie die Daten, die an einer Server geschickt werden sichtbar machen.<br/>
-Und als Server verwenden wir einen **Web-hook Dienst**.
+Nun werden Sie **Daten an einen Server schicken** und die **übertragen Daten sichtbar machen** und analysieren.
 
-Was ist ein Web-hook Dienst?<br/>
-Ein Web-hook Dienst ist ein Online-Dienst, der es ermöglicht, **HTTP-Anfragen (Requests) zu empfangen und deren Inhalt anzuzeigen**.<br/>
-Er wird für Testzwecke verwendet, um zu überprüfen, welche Daten von einem Client an einen Server gesendet werden.<br/>
-Der Vorteil ist, dass der **Client-Server-Kommunikation simuliert** werden kann, ohne einen eigenen Server einrichten zu müssen.
-
-Des Ergebnis zeigt er Webhook auf seiner Webseite an.
-
-<img src={client_webhook} alt="Client-Webhook-http" style={{ height: "400px" }} />
+Den Request lösen Sie hier in der Lesson aus.<br/>
+Dann können Sie die übertragenen Daten im Netzwerk Tab der Developer Tools des Browsers analysieren.<br/>
+Und zusätzlich verwenden wir einen **Web-hook Dienst**, um die übertragenen Daten sichtbar zu machen.
 
 ---
 
-## Interaktive Übung Analyse mit Developer Tools
+## Interaktive Übung Analyse mit Developer Tools (Get)
 
 Es ist ein einfaches Formular vorbereite.<br/>
 ACHTUNG den Webserver myserver.bbw.ch gibt es nicht wirklich.<br/>
-Wenn wir einen Request absenden, dann wird eine Fehlermeldung angezeigt.<br/>
 Trotzdem können wir die Daten des Requests untersuchen.<br/>
-Dazu verwenden zunächst die Developertools des Browsers (Netzwerk-Tab).
+Dazu verwenden zunächst die Developer-Tools des Browsers (Netzwerk-Tab).
 
 **Aufgabe:**
 
@@ -86,37 +81,119 @@ Dazu verwenden zunächst die Developertools des Browsers (Netzwerk-Tab).
 weiter:
 
 - Frage: Wo stehen im Formular stehen die Bezeichnungen der Felder im Payload?
-- Zurück auf die Lesson Seite kommen Sie mit dem Zurück-Button des Browsers.
+
+<LiveSandbox
+    storageKey="11_HttpDevTools01"
+    code={
+        `function Formular() {
+     const [lastName, setLastName] = React.useState("");
+     const [preName, setPreName] = React.useState("");
+     const [result, setResult] = React.useState(null);
+
+     async function handleSubmit(e) {
+       e.preventDefault();
+       const url =
+         "https://myserver.bbw.ch/get" +
+         "?name=" + encodeURIComponent(lastName) +
+         "&vorname=" + encodeURIComponent(preName);
+       const response = await fetch(url);
+       const data = await response.json();
+       setResult(data);
+     }
+
+     return (
+       <div>
+         <form onSubmit={handleSubmit}>
+            <div><input
+              placeholder="Name"
+              value={lastName}
+              onChange={e => setLastName(e.target.value)}
+            /></div>
+            <div><input
+              placeholder="Vorname"
+              value={preName}
+              onChange={e => setPreName(e.target.value)}
+            /></div>
+            <button>Senden (GET)</button>
+         </form>
+
+         {result && (
+           <>
+             <h4>Server-Antwort</h4>
+             <pre>{JSON.stringify(result.args, null, 2)}</pre>
+           </>
+         )}
+       </div>
+     );
+  }`
+}
+/>
+
+---
+
+## Interaktive Übung Analyse mit Developer Tools (Post)
+
+Nun verwendet das Beispiel _post_ statt _get_ .
+
+**Aufgabe:**
+
+- Geben Sie in das Formular einen Vornamen und Nachnamen ein und lösen Sie den Request aus.
+- Untersuchen Sie den Request im Netzwerk-Tab der Developertools.
+  - Header und Payload
 
 weiter:
 
-- Ändern Sie die Methode im Formular von _get_ zu _post_.
-- Wiederholen Sie den Request und untersuchen Sie den Request im Netzwerk-Tab der Developertools.
-    - Header und Payload
-- Vergleichen Sie _get_ und _post_ in Bezug auf die in der Theorie behandelten Unterschiede.
-- Frage: Wie hat sich der Payload verändert?
-
-Formular:
+- Frage: Was ist der Unterschied im Payload zwischen Get und Post?
+- Frage: Was ist der Unterschied im Code zwischen Get und Post?
 
 <LiveSandbox
-    storageKey="11_HttpData01"
+    storageKey="11_HttpDevTools02"
     code={
         `function Formular() {
+     const [lastName, setLastName] = React.useState("");
+     const [preName, setPreName] = React.useState("");
+     const [result, setResult] = React.useState(null);
+
+     async function handleSubmit(e) {
+       e.preventDefault();
+       const url = "https://myserver.bbw.ch/post";
+       const response = await fetch(url, {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/json"
+         },
+         body: JSON.stringify({
+           name: lastName,
+           vorname: preName
+         })
+       });
+       const data = await response.json();
+       setResult(data);
+     }
+
     return (
-      <form
-        action="https://myserver.bbw.ch/addperson"
-        method="get"
-      >
-        <div>
-          <label>First name:</label>
-          <input type="text" name="firstname"/>
-        </div>
-        <div>
-          <label>Last name:</label>
-          <input type="text" name="lastname"/>
-        </div>
-        <input type="submit" value="Submit"/>
-      </form>
+      <div>
+        <form onSubmit={handleSubmit}>
+           <div><input
+             placeholder="Name"
+             value={lastName}
+             onChange={e => setLastName(e.target.value)}
+           /></div>
+           <div><input
+             placeholder="Vorname"
+             value={preName}
+             onChange={e => setPreName(e.target.value)}
+           /></div>
+           <button>Senden (POST)</button>
+        </form>
+
+        {result && (
+          <>
+            <h4>Server-Antwort</h4>
+            <pre>{JSON.stringify(result.args, null, 2)}</pre>
+          </>
+        )}
+      </div>
     );
   }`
 }
@@ -124,9 +201,18 @@ Formular:
 
 ---
 
-## Interaktive Übung Analyse mit Webhook
+## Interaktive Übung Analyse mit Webhook (GET)
 
-Nun ersetzen Sie den fiktiven Server myserver.bbw.ch durch einen Webhook Dienst.<br/>
+Nun schicken Sie den Request an einen Webhook Dienst.
+
+Was ist ein Web-hook Dienst?<br/>
+Ein Web-hook Dienst ist ein Online-Dienst, der es ermöglicht, **HTTP-Anfragen (Requests) zu empfangen und deren Inhalt anzuzeigen**.<br/>
+Er wird für Testzwecke verwendet, um zu überprüfen, welche Daten von einem Client an einen Server gesendet werden.<br/>
+Der Vorteil ist, dass der **Client-Server-Kommunikation simuliert** werden kann, ohne einen eigenen Server einrichten zu müssen.
+
+Den Inhalt des Request zeigt der Webhook auf seiner Webseite an.
+
+<img src={client_webhook} alt="Client-Webhook-http" style={{ height: "400px" }} />
 
 **Aufgabe:**
 
@@ -135,43 +221,131 @@ Nun ersetzen Sie den fiktiven Server myserver.bbw.ch durch einen Webhook Dienst.
 weiter:
 
 - Öffnen Sie in einem neuen Fenster des Browser die Webseite: https://webhook.site/
-- Ändern Sie unten im vorbereiten Formual die URL auf Ihre Webhook URL.
+- Ändern Sie unten im vorbereiteten Formular die URL auf Ihre Webhook URL.
 - Geben Sie in das Formular einen Vornamen und Nachnamen ein und lösen Sie den Request aus.
 - Schauen Sie im Browser-Fenster der Webhook.site die Reaktion an.
     - Untersuchen Header, Query strings und Form values
 
-weiter:
-
-- Ändern Sie den Request auf _post_.
-- Wiederholen Sie den Request und untersuchen Sie die Reaktion der Webhook.site.
-
 <LiveSandbox
-    storageKey="11_HttpData02"
+    storageKey="11_HttpDevTools03"
     code={
         `function Formular() {
-    return (
-      <form
-        action="https://webhook.site/6046a3a8-86bc-4e7b-bf05-796921b8c50c"
-        method="get"
-      >
-        <div>
-          <label>First name:</label>
-          <input type="text" name="firstname"/>
-        </div>
-        <div>
-          <label>Last name:</label>
-          <input type="text" name="lastname"/>
-        </div>
-        <input type="submit" value="Submit"/>
-      </form>
-    );
+     const [lastName, setLastName] = React.useState("");
+     const [preName, setPreName] = React.useState("");
+     const [result, setResult] = React.useState(null);
+
+     async function handleSubmit(e) {
+       e.preventDefault();
+       const url =
+         "https://webhook.site/c6576e09-ed9b-4403-9623-f81d8078d590" +
+         "?name=" + encodeURIComponent(lastName) +
+         "&vorname=" + encodeURIComponent(preName);
+       const response = await fetch(url);
+       const data = await response.json();
+       setResult(data);
+     }
+
+     return (
+       <div>
+         <form onSubmit={handleSubmit}>
+            <div><input
+              placeholder="Name"
+              value={lastName}
+              onChange={e => setLastName(e.target.value)}
+            /></div>
+            <div><input
+              placeholder="Vorname"
+              value={preName}
+              onChange={e => setPreName(e.target.value)}
+            /></div>
+            <button>Senden (GET)</button>
+         </form>
+
+         {result && (
+           <>
+             <h4>Server-Antwort</h4>
+             <pre>{JSON.stringify(result.args, null, 2)}</pre>
+           </>
+         )}
+       </div>
+     );
   }`
-    }
+}
+/>
+
+
+---
+
+---
+
+## Interaktive Übung Analyse mit Webhook (POST)
+
+Nun schicken Sie eine Post Request an einen Webhook Dienst.
+
+**Aufgabe:**
+
+- Ändern Sie unten im vorbereiteten Formular die URL auf Ihre Webhook URL.
+- Geben Sie in das Formular einen Vornamen und Nachnamen ein und lösen Sie den Request aus.
+- Schauen Sie im Browser-Fenster der Webhook.site die Reaktion an.
+  - Untersuchen Header, Query strings und Form values
+
+<LiveSandbox
+    storageKey="11_HttpDevTools04"
+    code={
+        `function Formular() {
+     const [lastName, setLastName] = React.useState("");
+     const [preName, setPreName] = React.useState("");
+     const [result, setResult] = React.useState(null);
+
+     async function handleSubmit(e) {
+       e.preventDefault();
+       const url = "https://webhook.site/c6576e09-ed9b-4403-9623-f81d8078d590";
+       const body =
+         "name=" + encodeURIComponent(lastName) +
+         "&vorname=" + encodeURIComponent(preName);
+       const response = await fetch(url, {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/x-www-form-urlencoded"
+         },
+         body: body
+       });
+
+       const data = await response.json();
+       setResult(data);
+     }
+
+     return (
+       <div>
+         <form onSubmit={handleSubmit}>
+            <div><input
+              placeholder="Name"
+              value={lastName}
+              onChange={e => setLastName(e.target.value)}
+            /></div>
+            <div><input
+              placeholder="Vorname"
+              value={preName}
+              onChange={e => setPreName(e.target.value)}
+            /></div>
+            <button>Senden (POST)</button>
+         </form>
+
+         {result && (
+           <>
+             <h4>Server-Antwort</h4>
+             <pre>{JSON.stringify(result.args, null, 2)}</pre>
+           </>
+         )}
+       </div>
+     );
+    }`
+}
 />
 
 ---
 
-## Interaktive Übung Antwort vom Webhook konfigurieren
+## Übung Antwort von Webhook.site
 
 **Aufgabe:**
 
@@ -179,11 +353,23 @@ weiter:
 
 weiter:
 
-- Konfigurieren Sie eine Antwort im Webhook Dienst.
-- Die Antwort macht allerdings im Kontext der React-Lession nicht direkt Sinn, sie zeigt das Prinzip.<br/>
-  Wenn wir mit der Antwort etwas anfangen möchten, dann müsste unsere React-Lession die Antwort auswerten.<br/>
-  Das kommt später.
+**Aufgabe:**
 
+- Erstellen Sie auf der Webseite des Webhook eine Antwort.
+- Probieren Sie aus, was die Antwort macht.
+
+Idee für Antwort auf der Webhook Seite:
+
+```text
+Content type: application/json
+Content:
+{
+  "args": {
+    "name": "Muster",
+    "vorname": "Paul"
+  }
+}
+```
 ---
 
 ## Übung Unterschied Webhook.site zu Postman.com
